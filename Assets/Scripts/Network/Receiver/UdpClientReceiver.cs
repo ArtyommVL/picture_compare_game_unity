@@ -1,3 +1,4 @@
+using System;
 using Extensions;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace Network.Receiver
 {
     public class UdpClientReceiver : MonoBehaviour
     {
+        public static event EventHandler<UserInputField> UserInputReceived;
+        
         private UdpClientModel _udpClientModel;
 
         private void Start()
@@ -24,7 +27,7 @@ namespace Network.Receiver
             if (data[0] == InputDataId.UserInputDataMessageID)
             {
                 var mes = data.UnpackMessage<UserInputMessage>(InputDataId.UserInputDataMessageID);
-                Debug.Log(mes.Id);
+                UserInputReceived?.Invoke(this, mes.UserInput.UserInputField);
             }
         }
 

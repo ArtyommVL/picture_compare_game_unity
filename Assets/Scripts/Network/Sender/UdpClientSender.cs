@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Crc;
+using CustomInput;
 using Extensions;
 using UnityEngine;
 
@@ -11,8 +12,14 @@ namespace Network.Sender
     public class UdpClientSender : MonoBehaviour, ISender
     {
         private UdpClient _udpClient;
+        private ICustomInput _customInput;
         private float _timer;
-        
+
+        private void Awake()
+        {
+            _customInput = new CustomInputHandler();
+        }
+
         private async void Update()
         {
            await Send();
@@ -66,7 +73,7 @@ namespace Network.Sender
         {
             return new UserInput()
             {
-                UserInputField = 0,
+                UserInputField = _customInput.SetInputValues(),
             };
         }
     }
