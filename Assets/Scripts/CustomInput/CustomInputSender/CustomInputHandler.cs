@@ -1,7 +1,7 @@
 using Network;
 using UnityEngine;
 
-namespace CustomInput
+namespace CustomInput.CustomInputSender
 {
     public class CustomInputHandler : ICustomInput
     {

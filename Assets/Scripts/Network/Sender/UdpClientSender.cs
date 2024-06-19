@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using Crc;
 using CustomInput;
+using CustomInput.CustomInputSender;
 using Extensions;
 using UnityEngine;
 

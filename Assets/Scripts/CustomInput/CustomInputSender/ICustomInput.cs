@@ -1,6 +1,6 @@
 using Network;
 
-namespace CustomInput
+namespace CustomInput.CustomInputSender
 {
     public interface ICustomInput
     {
