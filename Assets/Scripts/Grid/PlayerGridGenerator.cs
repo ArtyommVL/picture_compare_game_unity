@@ -14,8 +14,23 @@ namespace Grid
         [SerializeField] private List<GameObject> gridPatternUnit;
 
         private readonly List<PlayerGridUnit> _completedUnits = new List<PlayerGridUnit>();
+        
+        private void OnEnable()
+        {
+            gridGenerator.GridUpdated += OnGridUpdated;    
+        }
+        
+        private void Update()
+        {
+            GameCompleted?.Invoke(this, CompareAllUnits());
+        }
 
-        private void Start()
+        private void OnDisable()
+        {
+            gridGenerator.GridUpdated -= OnGridUpdated;
+        }
+
+        private void OnGridUpdated(object sender, EventArgs e)
         {
             for (int i = 0; i < gridPatternUnit.Count; i++)
             {
@@ -27,11 +42,6 @@ namespace Grid
                     _completedUnits.Add(patternUnit);
                 }
             }
-        }
-
-        private void Update()
-        {
-            GameCompleted?.Invoke(this, CompareAllUnits());
         }
 
         private bool CompareAllUnits()

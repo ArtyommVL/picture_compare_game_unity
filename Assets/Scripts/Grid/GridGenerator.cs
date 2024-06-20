@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Grid
 {
     public class GridGenerator : MonoBehaviour
     {
+        public event EventHandler GridUpdated; 
+        
         [SerializeField] private uint widthX = 3;
         [SerializeField] private uint widthZ = 3;
 
@@ -18,10 +22,17 @@ namespace Grid
             set => _activeBlockCount = value;
         }
 
-        private void Awake()
+        private void Start()
         {
-            _blocks.Clear();
+            GenerateGrid();
+        }
 
+        [ContextMenu("Generate")]
+        private void GenerateGrid()
+        { 
+            _blocks.Clear();
+            _activeBlockCount = 0;
+            
             for (int i = 0; i < widthX; i++)
             {
                 for (int j = 0; j < widthZ; j++)
@@ -37,6 +48,7 @@ namespace Grid
                     }
                 }
             }
+            GridUpdated?.Invoke(this,null);
         }
 
         public Dictionary<Vector3, bool> UpdatePositionsForParent(Transform parent)

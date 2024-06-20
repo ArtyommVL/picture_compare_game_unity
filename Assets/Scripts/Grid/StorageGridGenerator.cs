@@ -9,7 +9,12 @@ namespace Grid
         [SerializeField] private GridGenerator gridGenerator;
         [SerializeField] private List<GameObject> storageGrid;
         
-        private void Start()
+        private void OnEnable()
+        {
+            gridGenerator.GridUpdated += OnGridUpdated;    
+        }
+        
+        private void OnGridUpdated(object sender, EventArgs e)
         {
             for (int i = 0; i < storageGrid.Count; i++)
             {
@@ -20,6 +25,11 @@ namespace Grid
             {
                 storageGrid[i].SetActive(true);
             }
+        }
+        
+        private void OnDisable()
+        {
+            gridGenerator.GridUpdated += OnGridUpdated;    
         }
     }
 }

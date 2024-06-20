@@ -11,13 +11,23 @@ namespace Grid
         [SerializeField] private Transform parent;
         [SerializeField] private List<GameObject> gridUnit;
 
-        private void Start()
+        private void OnEnable()
+        {
+            gridGenerator.GridUpdated += OnGridUpdated;
+        }
+
+        private void OnGridUpdated(object sender, EventArgs senderEventArgs)
         {
             for (int i = 0; i < gridUnit.Count; i++)
             {
                 var isActive = gridGenerator.UpdatePositionsForParent(parent).ElementAt(i).Value;
                 gridUnit[i].SetActive(isActive);
             }
+        }
+
+        private void OnDisable()
+        {
+            gridGenerator.GridUpdated -= OnGridUpdated;
         }
     }
 }

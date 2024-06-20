@@ -23,7 +23,7 @@ namespace Grid
         {
             if (other.TryGetComponent<CubeUnit>(out CubeUnit cubeUnit))
             {
-                if (_isTriggerOn)
+                if (_isTriggerOn && !cubeUnit.IsSelected)
                 {
                     _isTriggerStay = true;
                     cubeUnit.SetColor(true);
