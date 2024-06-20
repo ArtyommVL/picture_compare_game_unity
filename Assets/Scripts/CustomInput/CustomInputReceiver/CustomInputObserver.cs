@@ -20,6 +20,7 @@ namespace CustomInput.CustomInputReceiver
 
         private void OnUserInputReceived(object sender, UserInputField inputField)
         {
+            Debug.Log(inputField.ToString());
             MoveRight?.Invoke(
                 this, 
                 (inputField & UserInputField.Right) != 0);

@@ -16,7 +16,7 @@ namespace Network.Receiver
             _udpClientModel.Initialize();
             _udpClientModel.ReceivedData += OnDataReceived;
         }
-
+        
         private void OnDisable()
         {
             _udpClientModel.ReceivedData -= OnDataReceived;

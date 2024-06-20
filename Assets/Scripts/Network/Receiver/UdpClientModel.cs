@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using UnityEngine;
 
 namespace Network.Receiver
 {
@@ -26,7 +27,6 @@ namespace Network.Receiver
             {
                 var rcvEp = new IPEndPoint(IPAddress.Any, 0);
                 byte[] receiveBytes = _udpClient.Receive(ref rcvEp);
-                
                 ReceivedData?.Invoke(this,receiveBytes);
             }
         }
