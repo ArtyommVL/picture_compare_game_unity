@@ -1,12 +1,18 @@
-using System;
 using UnityEngine;
 
 namespace Grid
 {
     public class PlayerGridUnit : MonoBehaviour
     {
+        private bool _isTriggerStay = false;
         private bool _isTriggerOn;
 
+        public bool IsTriggerStay
+        {
+            get => _isTriggerStay;
+            set => _isTriggerStay = value;
+        }
+        
         public bool IsTriggerOn
         {
             get => _isTriggerOn; 
@@ -19,6 +25,7 @@ namespace Grid
             {
                 if (_isTriggerOn)
                 {
+                    _isTriggerStay = true;
                     cubeUnit.SetColor(true);
                 }
             }
@@ -30,6 +37,7 @@ namespace Grid
             {
                 if (_isTriggerOn)
                 {
+                    _isTriggerStay = false;
                     cubeUnit.SetColor(false);
                 }
             }
