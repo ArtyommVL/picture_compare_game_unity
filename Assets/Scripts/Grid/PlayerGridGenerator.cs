@@ -9,7 +9,7 @@ namespace Grid
         [SerializeField] private GridGenerator gridGenerator;
         [SerializeField] private Transform parent;
         [SerializeField] private List<GameObject> gridPatternUnit;
-
+        
         private void Start()
         {
             for (int i = 0; i < gridPatternUnit.Count; i++)
