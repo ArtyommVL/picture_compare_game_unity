@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using Crc;
 using CustomInput.CustomInputSender;
 using Extensions;
@@ -13,6 +12,7 @@ namespace Network.Sender
     {
         private UdpClient _udpClient;
         private ICustomInput _customInput;
+        private UserInputField _userInputField;
         private float _timer;
 
         private void Awake()
@@ -20,17 +20,16 @@ namespace Network.Sender
             _customInput = new CustomInputHandler();
         }
 
-        private async void Update()
+        private void Update()
         {
-           await Send();
+            _userInputField = _customInput.SetInputValues();   
+            Send();
         }
 
-        public async Task Send()
+        public void Send()
         {
-            _timer += Time.deltaTime;
-            if (_timer >= 0.0333f )
+            if (_userInputField != 0)
             {
-                _timer = 0;
                 try
                 {
                     if (_udpClient == null)
@@ -40,12 +39,11 @@ namespace Network.Sender
 
                     _udpClient.Connect("127.0.0.1", 7878);
                     byte[] sendBytes = PackUserInputMsg().ToByteArray();
-                    await _udpClient.SendAsync(sendBytes, sendBytes.Length);
+                    _udpClient.SendAsync(sendBytes, sendBytes.Length);
                 }
                 catch (Exception e)
                 {
                     _udpClient = new UdpClient();
-                    Console.WriteLine(e.ToString());
                 }
             }
         }
@@ -73,7 +71,7 @@ namespace Network.Sender
         {
             return new UserInput()
             {
-                UserInputField = _customInput.SetInputValues(),
+                UserInputField = _userInputField,
             };
         }
     }

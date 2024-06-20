@@ -9,6 +9,10 @@ namespace CustomInput.CustomInputSender
         {
             UserInputField inputValue = 0;
             
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                inputValue |= UserInputField.Attack;
+            }
             if (Input.GetKey(KeyCode.A))
             {
                 inputValue |= UserInputField.Left;
@@ -24,10 +28,6 @@ namespace CustomInput.CustomInputSender
             if (Input.GetKey(KeyCode.S))
             {
                 inputValue |= UserInputField.Back;
-            }
-            if (Input.GetKey(KeyCode.F))
-            {
-                inputValue |= UserInputField.Attack;
             }
             
             return inputValue;

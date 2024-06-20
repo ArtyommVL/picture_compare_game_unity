@@ -8,12 +8,20 @@ namespace Grid
         [SerializeField] private uint widthX = 3;
         [SerializeField] private uint widthZ = 3;
 
-        private readonly Dictionary<Vector3, bool> _blocks = new ();
-        
+        private readonly Dictionary<Vector3, bool> _blocks = new();
+
+        private int _activeBlockCount;
+
+        public int ActiveBlocksCount
+        {
+            get => _activeBlockCount;
+            set => _activeBlockCount = value;
+        }
+
         private void Awake()
         {
             _blocks.Clear();
-            
+
             for (int i = 0; i < widthX; i++)
             {
                 for (int j = 0; j < widthZ; j++)
@@ -22,7 +30,11 @@ namespace Grid
                     float positionZ = j;
 
                     bool isActive = Random.Range(0, 2) == 1;
-                    _blocks.Add(new Vector3(positionX,0.1f,positionZ),isActive);
+                    _blocks.Add(new Vector3(positionX, 0.1f, positionZ), isActive);
+                    if (isActive)
+                    {
+                        _activeBlockCount += 1;
+                    }
                 }
             }
         }

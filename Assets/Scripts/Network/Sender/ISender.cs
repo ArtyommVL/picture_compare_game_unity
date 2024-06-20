@@ -4,6 +4,6 @@ namespace Network.Sender
 {
     public interface ISender
     {
-        Task Send();
+        void Send();
     }
 }

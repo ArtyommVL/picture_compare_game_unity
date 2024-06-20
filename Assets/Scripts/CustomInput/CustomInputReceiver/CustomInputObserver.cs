@@ -13,14 +13,25 @@ namespace CustomInput.CustomInputReceiver
         public static event EventHandler<bool> MoveBack;
         public static event EventHandler<bool> MoveAttack;
 
+        private float _timer = 0;
+
         private void OnEnable()
         {
             UdpClientReceiver.UserInputReceived += OnUserInputReceived;
         }
 
+        private void Update()
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= 0.033f)
+            {
+                _timer = 0;
+                OnUserInputReceived(this,0);
+            }
+        }
+
         private void OnUserInputReceived(object sender, UserInputField inputField)
         {
-            Debug.Log(inputField.ToString());
             MoveRight?.Invoke(
                 this, 
                 (inputField & UserInputField.Right) != 0);

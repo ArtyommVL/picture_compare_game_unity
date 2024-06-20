@@ -1,5 +1,7 @@
+using System;
 using CustomInput.CustomInputReceiver;
 using Grid;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerController
@@ -10,13 +12,14 @@ namespace PlayerController
         [SerializeField] private float maxDistance = 1f;
         [SerializeField] private float moveSpeed = 0.5f;
         
-        private Ray _ray;
         private readonly RaycastHit[] _raycastHit = new RaycastHit[5];
+        private CubeUnit _currentCubeUnit;
         private bool _moveRight;
         private bool _moveLeft;
         private bool _moveForward;
         private bool _moveBack;
         private bool _moveAttack;
+        private bool _isTake = false;
 
         private void OnEnable()
         {
@@ -45,21 +48,43 @@ namespace PlayerController
             {
                 transform.position += Vector3.left * (moveSpeed * Time.deltaTime);
             }
+            _currentCubeUnit?.MoveWith(gameObject.transform);
         }
-
-
+        
         private void FixedUpdate()
         {
-            _ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-
             int hits = Physics.RaycastNonAlloc(playerCamera.transform.position, playerCamera.transform.forward, _raycastHit,
                 maxDistance);
             for (int i = 0; i < hits; i++)
             {
                 if (_raycastHit[i].collider.TryGetComponent<CubeUnit>(out var cubeUnit))
                 {
+                    _currentCubeUnit = cubeUnit;
+                }
+            }
+            Array.Clear(_raycastHit,0,_raycastHit.Length);
+        }
+
+        private void ChangeStateCube(CubeUnit cubeUnit, bool isAttack)
+        {
+            if (cubeUnit is null)
+            {
+                return;
+            }
+
+            if (isAttack)
+            {
+                if (!cubeUnit.IsSelected)
+                {
+                    cubeUnit.IsSelected = true;
                     cubeUnit.SetSelectedColor(true);
                 }
+                else
+                {
+                    cubeUnit.IsSelected = false;
+                    cubeUnit.SetSelectedColor(false);
+                }
+                
             }
         }
         
@@ -94,6 +119,7 @@ namespace PlayerController
 
         private void OnMoveAttack(object sender, bool moveAttack)
         {
+            ChangeStateCube(_currentCubeUnit, _moveAttack);
             _moveAttack = moveAttack;
         }
     }
