@@ -1,7 +1,6 @@
 using System;
 using CustomInput.CustomInputReceiver;
 using Grid;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerController
@@ -18,8 +17,6 @@ namespace PlayerController
         private bool _moveLeft;
         private bool _moveForward;
         private bool _moveBack;
-        private bool _moveAttack;
-        private bool _isTake = false;
 
         private void OnEnable()
         {
@@ -119,8 +116,7 @@ namespace PlayerController
 
         private void OnMoveAttack(object sender, bool moveAttack)
         {
-            ChangeStateCube(_currentCubeUnit, _moveAttack);
-            _moveAttack = moveAttack;
+            ChangeStateCube(_currentCubeUnit, moveAttack);
         }
     }
 }

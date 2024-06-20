@@ -28,7 +28,7 @@ namespace Grid
         }
 
         [ContextMenu("Generate")]
-        private void GenerateGrid()
+        public void GenerateGrid()
         { 
             _blocks.Clear();
             _activeBlockCount = 0;
@@ -58,6 +58,19 @@ namespace Grid
             foreach (var block in _blocks)
             {
                 var key = block.Key + parent.position;
+                cache.Add(key, block.Value);
+            }
+
+            return cache;
+        }
+        
+        public Dictionary<Vector3, bool> UpdatePositions()
+        {
+            var cache = new Dictionary<Vector3, bool>();
+
+            foreach (var block in _blocks)
+            {
+                var key = block.Key;
                 cache.Add(key, block.Value);
             }
 
