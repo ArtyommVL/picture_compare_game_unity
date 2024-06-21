@@ -25,7 +25,9 @@ namespace PlayerController.Abilities
 
         private void FixedUpdate()
         {
-            int hits = Physics.RaycastNonAlloc(playerCamera.transform.position, playerCamera.transform.forward, _raycastHit,
+            int hits = Physics.RaycastNonAlloc(
+                playerCamera.transform.position, 
+                playerCamera.transform.forward, _raycastHit,
                 maxDistance);
             for (int i = 0; i < hits; i++)
             {
