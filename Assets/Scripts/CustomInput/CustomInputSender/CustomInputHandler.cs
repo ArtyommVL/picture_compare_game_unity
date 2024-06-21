@@ -5,11 +5,19 @@ namespace CustomInput.CustomInputSender
 {
     public class CustomInputHandler : ICommand, ICustomInput
     {
-        private readonly ICommand _moveAttack = new AttackCommand();
-        private readonly ICommand _moveRight = new RightCommand();
-        private readonly ICommand _moveLeft = new LeftCommand();
-        private readonly ICommand _moveForward = new MoveForwardCommand();
-        private readonly ICommand _moveBack = new BackCommand();
+        private readonly ICommand[] _commands;
+
+        public CustomInputHandler()
+        {
+            _commands = new ICommand[]
+            {
+                new AttackCommand(),
+                new RightCommand(), new LeftCommand(),
+                new MoveForwardCommand(),
+                new BackCommand(),
+            };
+        }
+
 
         public UserInputField SetInputValues()
         {
@@ -19,12 +27,11 @@ namespace CustomInput.CustomInputSender
         public UserInputField Execute()
         {
             UserInputField commands = 0;
-            
-            commands |= _moveAttack.Execute();
-            commands |= _moveRight.Execute();
-            commands |= _moveLeft.Execute();
-            commands |= _moveForward.Execute();
-            commands |= _moveBack.Execute();
+
+            foreach (var command in _commands)
+            {
+                commands |= command.Execute();
+            }
 
             return commands;
         }
