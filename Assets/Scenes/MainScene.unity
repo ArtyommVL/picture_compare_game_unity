@@ -214,7 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridGenerator: {fileID: 213800725}
   parent: {fileID: 851979535}
-  gridUnit:
+  gridUnits:
   - {fileID: 868302659}
   - {fileID: 965360348}
   - {fileID: 1872450736}
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridGenerator: {fileID: 213800725}
   parent: {fileID: 2145094920}
-  gridPatternUnit:
+  gridUnits:
   - {fileID: 1053368281}
   - {fileID: 2102812986}
   - {fileID: 183102483}
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridGenerator: {fileID: 213800725}
   parent: {fileID: 142066757}
-  storageGrid:
+  gridUnits:
   - {fileID: 1022790419}
   - {fileID: 309684647}
   - {fileID: 371664669}
