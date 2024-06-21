@@ -26,15 +26,15 @@ namespace Network.Receiver
             {
                 var rcvEp = new IPEndPoint(IPAddress.Any, 0);
                 byte[] receiveBytes = _udpClient.Receive(ref rcvEp);
-                ReceivedData?.Invoke(this,receiveBytes);
+                ReceivedData?.Invoke(this, receiveBytes);
             }
         }
         
         public void Dispose()
         {
+            _thread?.Abort();
             _udpClient.Client?.Close();
             _udpClient?.Dispose();
-            _thread?.Abort();
         }
     }
 }
