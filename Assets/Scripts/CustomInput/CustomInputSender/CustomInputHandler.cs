@@ -18,7 +18,6 @@ namespace CustomInput.CustomInputSender
             };
         }
 
-
         public UserInputField SetInputValues()
         {
             return Execute();
