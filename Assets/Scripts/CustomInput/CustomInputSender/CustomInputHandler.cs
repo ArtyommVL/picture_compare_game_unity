@@ -1,36 +1,33 @@
+using CustomInput.CustomInputSender.Commands;
 using Network;
 using UnityEngine;
 
 namespace CustomInput.CustomInputSender
 {
-    public class CustomInputHandler : ICustomInput
+    public class CustomInputHandler : ICommand, ICustomInput
     {
+        private readonly ICommand _moveAttack = new AttackCommand();
+        private readonly ICommand _moveRight = new RightCommand();
+        private readonly ICommand _moveLeft = new LeftCommand();
+        private readonly ICommand _moveForward = new MoveForwardCommand();
+        private readonly ICommand _moveBack = new BackCommand();
+
         public UserInputField SetInputValues()
         {
-            UserInputField inputValue = 0;
+            return Execute();
+        }
+
+        public UserInputField Execute()
+        {
+            UserInputField commands = 0;
             
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                inputValue |= UserInputField.Attack;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                inputValue |= UserInputField.Left;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                inputValue |= UserInputField.Right;
-            }
-            if (Input.GetKey(KeyCode.W))
-            {
-                inputValue |= UserInputField.Forward;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                inputValue |= UserInputField.Back;
-            }
-            
-            return inputValue;
+            commands |= _moveAttack.Execute();
+            commands |= _moveRight.Execute();
+            commands |= _moveLeft.Execute();
+            commands |= _moveForward.Execute();
+            commands |= _moveBack.Execute();
+
+            return commands;
         }
     }
 }
