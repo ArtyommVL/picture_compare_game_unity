@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CustomInput.CustomInputReceiver
 {
-    public class CustomInputObserver : MonoBehaviour
+    public class CustomInputReceiver : MonoBehaviour
     {
         public static event EventHandler<bool> MoveRight;
         public static event EventHandler<bool> MoveLeft;

@@ -20,11 +20,11 @@ namespace PlayerController
 
         private void OnEnable()
         {
-            CustomInputObserver.MoveRight += OnMoveRight;
-            CustomInputObserver.MoveLeft += OnMoveLeft;
-            CustomInputObserver.MoveForward += OnMoveForward;
-            CustomInputObserver.MoveBack += OnMoveBack;
-            CustomInputObserver.MoveAttack += OnMoveAttack;
+            CustomInputReceiver.MoveRight += OnMoveRight;
+            CustomInputReceiver.MoveLeft += OnMoveLeft;
+            CustomInputReceiver.MoveForward += OnMoveForward;
+            CustomInputReceiver.MoveBack += OnMoveBack;
+            CustomInputReceiver.MoveAttack += OnMoveAttack;
         }
 
         private void Update()
@@ -87,11 +87,11 @@ namespace PlayerController
         
         private void OnDisable()
         {
-            CustomInputObserver.MoveRight -= OnMoveRight;
-            CustomInputObserver.MoveLeft -= OnMoveLeft;
-            CustomInputObserver.MoveForward -= OnMoveForward;
-            CustomInputObserver.MoveBack -= OnMoveBack;
-            CustomInputObserver.MoveAttack -= OnMoveAttack;
+            CustomInputReceiver.MoveRight -= OnMoveRight;
+            CustomInputReceiver.MoveLeft -= OnMoveLeft;
+            CustomInputReceiver.MoveForward -= OnMoveForward;
+            CustomInputReceiver.MoveBack -= OnMoveBack;
+            CustomInputReceiver.MoveAttack -= OnMoveAttack;
         }
 
         private void OnMoveRight(object sender, bool moveRight)

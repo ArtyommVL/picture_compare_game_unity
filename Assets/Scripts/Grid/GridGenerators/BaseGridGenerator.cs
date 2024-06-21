@@ -17,7 +17,6 @@ namespace Grid.GridGenerators
 
         protected virtual void OnGridUpdated(object sender, EventArgs gridEventArgs)
         {
-            
         }
 
         protected void OnDisable()
