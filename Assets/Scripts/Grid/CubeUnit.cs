@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Grid
 {
-    public class CubeUnit : MonoBehaviour
+    public class CubeUnit : MonoBehaviour, IInteractable
     {
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private Color activeColor = Color.green;

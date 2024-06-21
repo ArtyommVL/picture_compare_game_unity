@@ -1,6 +1,7 @@
 using System;
 using CustomInput.CustomInputReceiver;
 using Grid;
+using PlayerController.Mover;
 using UnityEngine;
 
 namespace PlayerController
@@ -13,10 +14,25 @@ namespace PlayerController
         
         private readonly RaycastHit[] _raycastHit = new RaycastHit[5];
         private CubeUnit _currentCubeUnit;
-        private bool _moveRight;
-        private bool _moveLeft;
-        private bool _moveForward;
-        private bool _moveBack;
+        
+        private IMover _moveRight;
+        private IMover _moveLeft;
+        private IMover _moveForward;
+        private IMover _moveBack;
+        
+        private bool _isMoveRight;
+        private bool _isMoveLeft;
+        private bool _isMoveForward;
+        private bool _isMoveBack;
+
+        private void Awake()
+        {
+            _moveRight = new MoveRight();
+            _moveLeft = new MoveLeft();
+            _moveForward = new MoveForward();
+            _moveBack = new MoveBack();
+        }
+
 
         private void OnEnable()
         {
@@ -29,22 +45,11 @@ namespace PlayerController
 
         private void Update()
         {
-            if (_moveForward)
-            {
-                transform.position += Vector3.forward * (moveSpeed * Time.deltaTime);
-            }
-            if (_moveBack)
-            {
-                transform.position += Vector3.back * (moveSpeed * Time.deltaTime);
-            }
-            if (_moveRight)
-            {
-                transform.position += Vector3.right * (moveSpeed * Time.deltaTime);
-            }
-            if (_moveLeft)
-            {
-                transform.position += Vector3.left * (moveSpeed * Time.deltaTime);
-            }
+            _moveRight.Move(gameObject,_isMoveRight, moveSpeed);
+            _moveLeft.Move(gameObject,_isMoveLeft, moveSpeed);
+            _moveForward.Move(gameObject,_isMoveForward, moveSpeed);
+            _moveBack.Move(gameObject,_isMoveBack, moveSpeed);
+            
             _currentCubeUnit?.MoveWith(gameObject.transform);
         }
         
@@ -96,22 +101,22 @@ namespace PlayerController
 
         private void OnMoveRight(object sender, bool moveRight)
         {
-            _moveRight = moveRight;
+            _isMoveRight = moveRight;
         }
 
         private void OnMoveLeft(object sender, bool moveLeft)
         {
-            _moveLeft = moveLeft;
+            _isMoveLeft = moveLeft;
         }
 
         private void OnMoveForward(object sender, bool moveForward)
         {
-            _moveForward = moveForward;
+            _isMoveForward = moveForward;
         }
 
         private void OnMoveBack(object sender, bool moveBack)
         {
-            _moveBack = moveBack;
+            _isMoveBack = moveBack;
         }
 
         private void OnMoveAttack(object sender, bool moveAttack)
