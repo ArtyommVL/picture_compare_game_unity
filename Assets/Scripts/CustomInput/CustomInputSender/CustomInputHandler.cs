@@ -1,6 +1,5 @@
 using CustomInput.CustomInputSender.Commands;
 using Network;
-using UnityEngine;
 
 namespace CustomInput.CustomInputSender
 {
