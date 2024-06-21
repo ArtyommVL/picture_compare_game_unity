@@ -1,9 +1,6 @@
-using Grid;
-
-namespace PlayerController.Mover
+namespace PlayerController.Abilities
 {
     public interface IAbility
     {
-        public void ApplyAbility(IInteractable interactableUnit,bool isAbilityState);
     }
 }
