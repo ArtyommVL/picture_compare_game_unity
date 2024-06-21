@@ -39,7 +39,7 @@ namespace PlayerController.Abilities
 
         private void OnDisable()
         {
-            CustomInputReceiver.MoveAttack += OnMoveAttack;
+            CustomInputReceiver.MoveAttack -= OnMoveAttack;
         }
 
         private void OnMoveAttack(object sender, bool moveAttack)
