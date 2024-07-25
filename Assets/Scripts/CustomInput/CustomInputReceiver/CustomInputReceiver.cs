@@ -2,10 +2,11 @@ using System;
 using Network;
 using Network.Receiver;
 using UnityEngine;
+using Zenject;
 
 namespace CustomInput.CustomInputReceiver
 {
-    public class CustomInputReceiver : MonoBehaviour
+    public class CustomInputReceiver : ITickable, IDisposable
     {
         public static event EventHandler<bool> MoveRight;
         public static event EventHandler<bool> MoveLeft;
@@ -13,14 +14,17 @@ namespace CustomInput.CustomInputReceiver
         public static event EventHandler<bool> MoveBack;
         public static event EventHandler<bool> MoveAttack;
 
+        private UdpClientReceiver _udpClientReceiver;
         private float _timer = 0;
 
-        private void OnEnable()
+        [Inject]
+        public void Init(UdpClientReceiver udpClientReceiver)
         {
-            UdpClientReceiver.UserInputReceived += OnUserInputReceived;
+            _udpClientReceiver = udpClientReceiver;
+            _udpClientReceiver.UserInputReceived += OnUserInputReceived;   
         }
 
-        private void Update()
+        public void Tick()
         {
             _timer += Time.deltaTime;
             if (_timer >= 0.033f)
@@ -49,9 +53,9 @@ namespace CustomInput.CustomInputReceiver
                 (inputField & UserInputField.Attack) != 0);
         }
         
-        private void OnDisable()
+        public void Dispose()
         {
-            UdpClientReceiver.UserInputReceived -= OnUserInputReceived;
+            _udpClientReceiver.UserInputReceived -= OnUserInputReceived;   
         }
     }
 }

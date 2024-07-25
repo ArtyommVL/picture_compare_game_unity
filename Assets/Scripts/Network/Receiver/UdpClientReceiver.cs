@@ -8,7 +8,7 @@ namespace Network.Receiver
     public class UdpClientReceiver : ITickable, IDisposable
     {
         private readonly ConcurrentQueue<byte[]> _receivedQueue = new ConcurrentQueue<byte[]>();
-        public static event EventHandler<UserInputField> UserInputReceived;
+        public event EventHandler<UserInputField> UserInputReceived;
 
         private UdpClientModel _udpClientModel;
 

@@ -1,3 +1,4 @@
+using CustomInput.CustomInputReceiver;
 using CustomInput.CustomInputSender;
 using CustomInput.CustomInputSender.Commands;
 using Network.Receiver;
@@ -19,6 +20,7 @@ namespace Environment
             Container.BindInterfacesAndSelfTo<UdpClientSender>().AsSingle();
             Container.BindInterfacesAndSelfTo<UdpClientModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<UdpClientReceiver>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CustomInputReceiver>().AsSingle();
         }
     
         private void InputService()
