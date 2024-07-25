@@ -4,28 +4,29 @@ using System.Net.Sockets;
 using Crc;
 using CustomInput.CustomInputSender;
 using Extensions;
-using UnityEngine;
+using Zenject;
 
 namespace Network.Sender
 {
-    public class UdpClientSender : MonoBehaviour, ISender
+    public class UdpClientSender : ITickable, ISender
     {
         private UdpClient _udpClient;
-        private ICustomInput _customInput;
+        private CustomInputHandler _customInput;
         private UserInputField _userInputField;
         private float _timer;
 
-        private void Awake()
+        [Inject]
+        public void Init(CustomInputHandler customInputHandler)
         {
-            _customInput = new CustomInputHandler();
+            _customInput = customInputHandler;
         }
 
-        private void Update()
+        public void Tick()
         {
-            _userInputField = _customInput.SetInputValues();   
+            _userInputField = _customInput.Execute();   
             Send();
         }
-
+        
         public void Send()
         {
             if (_userInputField != 0)

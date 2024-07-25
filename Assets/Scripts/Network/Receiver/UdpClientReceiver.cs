@@ -1,25 +1,26 @@
 using System;
 using System.Collections.Concurrent;
 using Extensions;
-using UnityEngine;
+using Zenject;
 
 namespace Network.Receiver
 {
-    public class UdpClientReceiver : MonoBehaviour
+    public class UdpClientReceiver : ITickable, IDisposable
     {
         private readonly ConcurrentQueue<byte[]> _receivedQueue = new ConcurrentQueue<byte[]>();
         public static event EventHandler<UserInputField> UserInputReceived;
 
         private UdpClientModel _udpClientModel;
 
-        private void Start()
+        [Inject]
+        public void Init(UdpClientModel udpClientModel)
         {
-            _udpClientModel = new UdpClientModel();
+            _udpClientModel = udpClientModel;
             _udpClientModel.Initialize();
             _udpClientModel.ReceivedData += OnDataReceived;
         }
 
-        private void Update()
+        public void Tick()
         {
             while (_receivedQueue.TryDequeue(out var result))
             {
@@ -30,20 +31,16 @@ namespace Network.Receiver
                 }
             }
         }
-
-        private void OnDisable()
-        {
-            _udpClientModel.ReceivedData -= OnDataReceived;
-        }
-
+        
         private void OnDataReceived(object sender, byte[] data)
         {
             _receivedQueue.Enqueue(data);
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
-            _udpClientModel.Dispose();
+            _udpClientModel.ReceivedData -= OnDataReceived;
+            _udpClientModel?.Dispose();
         }
     }
 }

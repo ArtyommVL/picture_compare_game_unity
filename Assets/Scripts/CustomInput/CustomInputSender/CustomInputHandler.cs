@@ -3,23 +3,14 @@ using Network;
 
 namespace CustomInput.CustomInputSender
 {
-    public class CustomInputHandler : ICommand, ICustomInput
+    public class CustomInputHandler : ICommand
     {
         private readonly ICommand[] _commands;
 
-        public CustomInputHandler()
+        public CustomInputHandler(ICommand[] commands)
         {
-            _commands = new ICommand[]
-            {
-                new AttackCommand(),
-                new RightCommand(), new LeftCommand(),
-                new MoveForwardCommand(),
-                new BackCommand(),
-            };
+            _commands = commands;
         }
-
-        public UserInputField SetInputValues() 
-            => Execute();
 
         public UserInputField Execute()
         {

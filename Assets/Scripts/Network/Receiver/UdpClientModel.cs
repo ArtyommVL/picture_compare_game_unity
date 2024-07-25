@@ -11,7 +11,7 @@ namespace Network.Receiver
 
         private UdpClient _udpClient;
         private Thread _thread;
-        private IPEndPoint _ipEndPoint = new(IPAddress.Any, 7878);
+        private readonly IPEndPoint _ipEndPoint = new(IPAddress.Any, 7878);
 
         public void Initialize()
         {
