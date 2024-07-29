@@ -1,6 +1,7 @@
 using CustomInput.CustomInputReceiver;
 using CustomInput.CustomInputSender;
 using CustomInput.CustomInputSender.Commands;
+using GameStates;
 using Network.Receiver;
 using Network.Sender;
 using PlayerController.Mover;
@@ -15,6 +16,7 @@ namespace Environment
             InputService();
             UdpService();
             MoverService();
+            GameStates();
         }
 
         private void UdpService()
@@ -67,7 +69,7 @@ namespace Environment
                     };
 
                     return new CustomInputHandler(commands);
-                });
+                }).AsCached();
         }
 
 
@@ -77,6 +79,14 @@ namespace Environment
             Container.BindInterfacesAndSelfTo<MoveForward>().AsSingle();
             Container.BindInterfacesAndSelfTo<MoveRight>().AsSingle();
             Container.BindInterfacesAndSelfTo<MoveLeft>().AsSingle();
+        }
+
+        private void GameStates()
+        {
+            Container.BindInterfacesAndSelfTo<MainGameState>().AsCached();
+            Container.BindInterfacesAndSelfTo<UDPGameState>().AsCached();
+            Container.BindInterfacesAndSelfTo<UDPRCGameState>().AsCached();
+            Container.BindInterfacesAndSelfTo<GameStateMachine>().AsCached();
         }
     }
 }
