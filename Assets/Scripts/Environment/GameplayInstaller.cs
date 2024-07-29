@@ -3,6 +3,7 @@ using CustomInput.CustomInputSender;
 using CustomInput.CustomInputSender.Commands;
 using Network.Receiver;
 using Network.Sender;
+using PlayerController.Mover;
 using Zenject;
 
 namespace Environment
@@ -13,6 +14,7 @@ namespace Environment
         {
             InputService();
             UdpService();
+            MoverService();
         }
 
         private void UdpService()
@@ -28,19 +30,19 @@ namespace Environment
             Container.Bind<AttackCommand>()
                 .ToSelf()
                 .AsSingle();
-        
+
             Container.Bind<BackCommand>()
                 .ToSelf()
                 .AsSingle();
-        
+
             Container.Bind<LeftCommand>()
                 .ToSelf()
                 .AsSingle();
-        
+
             Container.Bind<MoveForwardCommand>()
                 .ToSelf()
                 .AsSingle();
-        
+
             Container.Bind<RightCommand>()
                 .ToSelf()
                 .AsSingle();
@@ -66,6 +68,15 @@ namespace Environment
 
                     return new CustomInputHandler(commands);
                 });
+        }
+
+
+        private void MoverService()
+        {
+            Container.BindInterfacesAndSelfTo<MoveBack>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MoveForward>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MoveRight>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MoveLeft>().AsSingle();
         }
     }
 }

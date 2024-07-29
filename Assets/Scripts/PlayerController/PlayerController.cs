@@ -1,13 +1,15 @@
 using CustomInput.CustomInputReceiver;
 using PlayerController.Mover;
 using UnityEngine;
+using Zenject;
 
 namespace PlayerController
 {
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = 0.5f;
-        
+
+        private CustomInputReceiver _customInputReceiver;
         private IMover _moveRight;
         private IMover _moveLeft;
         private IMover _moveForward;
@@ -18,20 +20,27 @@ namespace PlayerController
         private bool _isMoveForward;
         private bool _isMoveBack;
 
-        private void Awake()
+        [Inject]
+        public void Init(
+            CustomInputReceiver customInputReceiver,
+            MoveRight moveRight, 
+            MoveLeft moveLeft, 
+            MoveForward moveForward, 
+            MoveBack moveBack)
         {
-            _moveRight = new MoveRight();
-            _moveLeft = new MoveLeft();
-            _moveForward = new MoveForward();
-            _moveBack = new MoveBack();
+            _customInputReceiver = customInputReceiver;
+            _moveRight = moveRight;
+            _moveLeft = moveLeft;
+            _moveForward = moveForward;
+            _moveBack = moveBack;
         }
 
         private void OnEnable()
         {
-            CustomInputReceiver.MoveRight += OnMoveRight;
-            CustomInputReceiver.MoveLeft += OnMoveLeft;
-            CustomInputReceiver.MoveForward += OnMoveForward;
-            CustomInputReceiver.MoveBack += OnMoveBack;
+            _customInputReceiver.MoveRight += OnMoveRight;
+            _customInputReceiver.MoveLeft += OnMoveLeft;
+            _customInputReceiver.MoveForward += OnMoveForward;
+            _customInputReceiver.MoveBack += OnMoveBack;
         }
 
         private void Update()
@@ -44,10 +53,10 @@ namespace PlayerController
         
         private void OnDisable()
         {
-            CustomInputReceiver.MoveRight -= OnMoveRight;
-            CustomInputReceiver.MoveLeft -= OnMoveLeft;
-            CustomInputReceiver.MoveForward -= OnMoveForward;
-            CustomInputReceiver.MoveBack -= OnMoveBack;
+            _customInputReceiver.MoveRight -= OnMoveRight;
+            _customInputReceiver.MoveLeft -= OnMoveLeft;
+            _customInputReceiver.MoveForward -= OnMoveForward;
+            _customInputReceiver.MoveBack -= OnMoveBack;
         }
 
         private void OnMoveRight(object sender, bool moveRight)

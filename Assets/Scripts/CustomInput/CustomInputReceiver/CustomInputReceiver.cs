@@ -8,11 +8,11 @@ namespace CustomInput.CustomInputReceiver
 {
     public class CustomInputReceiver : ITickable, IDisposable
     {
-        public static event EventHandler<bool> MoveRight;
-        public static event EventHandler<bool> MoveLeft;
-        public static event EventHandler<bool> MoveForward;
-        public static event EventHandler<bool> MoveBack;
-        public static event EventHandler<bool> MoveAttack;
+        public event EventHandler<bool> MoveRight;
+        public event EventHandler<bool> MoveLeft;
+        public event EventHandler<bool> MoveForward;
+        public event EventHandler<bool> MoveBack;
+        public event EventHandler<bool> MoveAttack;
 
         private UdpClientReceiver _udpClientReceiver;
         private float _timer = 0;

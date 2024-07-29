@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Sockets;
 using Crc;
 using CustomInput.CustomInputSender;
+using CustomInput.CustomInputSender.Commands;
 using Extensions;
 using Zenject;
 
@@ -11,7 +12,7 @@ namespace Network.Sender
     public class UdpClientSender : ITickable, ISender
     {
         private UdpClient _udpClient;
-        private CustomInputHandler _customInput;
+        private ICommand _customInput;
         private UserInputField _userInputField;
         private float _timer;
 

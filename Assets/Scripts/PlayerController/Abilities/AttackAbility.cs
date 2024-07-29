@@ -2,6 +2,7 @@ using System;
 using CustomInput.CustomInputReceiver;
 using Grid;
 using UnityEngine;
+using Zenject;
 
 namespace PlayerController.Abilities
 {
@@ -9,13 +10,20 @@ namespace PlayerController.Abilities
     {
         [SerializeField] private Camera playerCamera;
         [SerializeField] private float maxDistance = 1f;
-        
-        private readonly RaycastHit[] _raycastHit = new RaycastHit[5];
+
+        private CustomInputReceiver _customInputReceiver;
         private CubeUnit _currentCubeUnit;
+        private readonly RaycastHit[] _raycastHit = new RaycastHit[5];
+
+        [Inject]
+        public void Init(CustomInputReceiver customInputReceiver)
+        {
+            _customInputReceiver = customInputReceiver;
+        }
         
         private void OnEnable()
         {
-            CustomInputReceiver.MoveAttack += OnMoveAttack;
+            _customInputReceiver.MoveAttack += OnMoveAttack;
         }
 
         private void Update()
@@ -41,7 +49,7 @@ namespace PlayerController.Abilities
 
         private void OnDisable()
         {
-            CustomInputReceiver.MoveAttack -= OnMoveAttack;
+            _customInputReceiver.MoveAttack -= OnMoveAttack;
         }
 
         private void OnMoveAttack(object sender, bool moveAttack)
